@@ -2,5 +2,8 @@
   "dependencies": {
     "0g": "^0.4.2",
     "npm": "^11.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
   }
 }
