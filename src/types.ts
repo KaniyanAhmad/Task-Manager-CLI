@@ -1,11 +1,11 @@
 
 export interface Task {
-    id: string;
+    id: number;
     text: string;
     completed: boolean;
     priority: 'low' | 'medium' | 'high';
     createdAt: Date;
-    completedAt?: Date;
+    completedAt?: Date | undefined;
 }
 
 export interface TaskStats {
