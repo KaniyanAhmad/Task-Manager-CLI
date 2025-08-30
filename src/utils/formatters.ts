@@ -43,5 +43,10 @@ export const formatters = {
     // Formats an error message
     error: (message: string): string => {
         return `❗ Error: ${message}`;
+    },
+
+    // Add the success formatter
+    success: (message: string): string => {
+        return `✅ Success: ${message}`;
     }
 }
