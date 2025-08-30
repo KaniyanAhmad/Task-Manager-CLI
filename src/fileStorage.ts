@@ -21,7 +21,7 @@ export class FileStorage {
       await fs.access(this.filePath); // Check if file exists
       const data = await fs.readFile(this.filePath, 'utf-8'); // Read file content
       const tasks: Task[] = JSON.parse(data); // Parse JSON content
-      return tasks.map((task: any) => ({  // Ensure date fields are properly converted
+      return tasks.map((task: any) => ({
         ...task,
         createdAt: new Date(task.createdAt),
         completedAt: task.completedAt ? new Date(task.completedAt) : undefined,
