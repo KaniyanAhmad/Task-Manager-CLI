@@ -72,13 +72,16 @@ export class CLI {
     console.log(formatters.taskList(tasks));
   }
 
+  private validateTaskId(input: string | undefined): number {
+    if (!input) throw new ValidationError('Please provide task ID');
+    const id = parseInt(input, 10);
+    if (isNaN(id) || id < 1) throw new ValidationError('Task ID must be a positive number');
+    return id;
+  }
+
   // Handle "complete" command
   private async handleComplete(args: string[]): Promise<void> {
-    if (args.length === 0) {
-      throw new ValidationError('Please provide task ID');
-    }
-
-    const taskId = parseInt(args[0], 10);
+    const taskId = this.validateTaskId(args[0]);
     const task = await this.taskManager.completeTask(taskId);
     
     console.log(formatters.success(`Completed task: ${task.text}`));
@@ -86,11 +89,7 @@ export class CLI {
 
   // Handle "uncomplete" command
   private async handleUncomplete(args: string[]): Promise<void> {
-    if (args.length === 0) {
-      throw new ValidationError('Please provide task ID');
-    }
-
-    const taskId = parseInt(args[0], 10);
+    const taskId = this.validateTaskId(args[0]);
     const task = await this.taskManager.uncompleteTask(taskId);
     
     console.log(formatters.success(`Uncompleted task: ${task.text}`));
@@ -98,11 +97,7 @@ export class CLI {
 
   // Handle "delete" command
   private async handleDelete(args: string[]): Promise<void> {
-    if (args.length === 0) {
-      throw new ValidationError('Please provide task ID');
-    }
-
-    const taskId = parseInt(args[0], 10);
+    const taskId = this.validateTaskId(args[0]);
     const task = await this.taskManager.deleteTask(taskId);
     
     console.log(formatters.success(`Deleted task: ${task.text}`));
@@ -114,7 +109,7 @@ export class CLI {
       throw new ValidationError('Please provide task ID and new text');
     }
 
-    const taskId = parseInt(args[0], 10);
+    const taskId = this.validateTaskId(args[0]);
     const newText = args.slice(1).join(' ');
     
     const task = await this.taskManager.editTask(taskId, newText);
